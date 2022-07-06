@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+>
+<h:head>
+    <title>Lab3</title>
+    <script type="text/javascript" src="clock.js"></script>
+    <style>
+        #clock > span {
+            font-size: 20pt;
+        }
+    </style>
+</h:head>
+<h:body onload="clockStart();">
+    <h1 align="center">Лабораторная работа №3</h1>
+    <h2 align="center">Вариант №793</h2>
+    <h3 align="right">Выполнили:Хлопков Д., Фищенко В.</h3>
+    <h3 align="right">Проверил: Николаев В. В.</h3>
+    <div id="clock">
+        <span id="hours"></span>:<span id="minutes"></span>:<span id="seconds"></span>
+    </div>
+    <h:link outcome="main">На основную страницу</h:link>
+</h:body>
+</html>

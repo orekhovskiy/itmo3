@@ -1,0 +1,111 @@
+	<html>
+<head>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script src="ShootingMethod.js"></script>
+	<script src="EulerMethod.js"></script>
+	<script src="NewtonMethod.js"></script>
+	<script type="text/javascript">
+	function func() {
+    	var func;
+		switch(document.getElementById('problem').value) {
+		case "first":
+			func = function(x, y, z){
+				return x + y;
+			}
+			break;
+		case "second":
+			func = function(x, y, z){
+				return Math.exp(x) + 2 * y;
+			}
+			break;
+		case "third":
+			func = function(x, y, z){
+				return Math.pow(x,3) + y + z;
+			}
+		  	break;
+		}
+		return func;
+    }
+
+	function valueAt(x, polynomial, firstNode, step) {
+		var sum = 0;
+		var product = 1;
+		for (var i = 0; i < polynomial.length; i++)
+		{
+			sum += polynomial[i] * product;
+			var xn = firstNode + i * step;
+			product *= (x - xn);
+		}
+		return sum;
+	}
+
+	function updatePlot() {
+
+		var a = parseNumber('a');
+		var b = parseNumber('b');
+		var ya = parseNumber('ya');
+		var yb = parseNumber('yb');
+		var z1 = 0, z2 = 1;
+		var precision = parseNumber('precision');
+		var shootingSolution = ShootingMethod.Solve(func(), a, b, ya, yb, z1, z2, precision);
+		var eulerSolution = [[], []];
+		eulerSolution = EulerMethod.Solve(func(), a, ya, shootingSolution, b, precision);
+		var solution = NewtonMethod.Interpolate(eulerSolution);
+		drawPlot(solution, a, b);
+	}
+		
+	function drawPlot(solution, x0, xn) {
+		var offset = (xn - x0) * 0.125;
+		var left = x0 - offset;
+		var right = xn + offset;
+		var step = (xn - x0) / 30;
+		
+		var c = 0;
+		var xArr = [], yArr = [];
+		for (var i = left; i <= right; i+=step){
+			yArr[c] = valueAt(i,solution, x0, step);
+			xArr[c] = i;
+			c++;
+		}
+		var trace = {
+			x:xArr,
+			y:yArr,
+			type: 'lines',
+			name: 'Решение'
+		}
+		var data = [trace];
+		Plotly.newPlot('graph', data);
+	}
+
+	function parseNumber(id){
+    	var number = parseFloat(document.getElementById(id).value);
+        if (isNaN(number))
+          document.getElementById(id).value = '';
+    	return number;
+    }
+	</script>	
+</head>
+<body>
+	<br>
+		<span>Выберите задачу</span>
+	    <select  id = "problem">
+		    <option value = "first">x + y</option>
+		    <option value = "second">e^x + 2y</option>
+		    <option value = "third">x^3 + y + z</option>
+    	</select>
+		<span>Задайте граничные условия</span>
+		<span>a = </span>
+	    <input required type="number" id="a" step="0.1">
+	    <span>b = </span>
+	    <input required type="number" id="b" step="0.1">
+	    <span>y(a) = </span>
+	    <input required type="number" id="ya" step="0.1">
+	    <span>y(b) = </span>
+	    <input required type="number" id="yb" step="0.1">
+	    <span>Точность</span>
+	    <input required type="number" id="precision" step="0.1">
+	    <input type="submit" name ="submit" value ="Подсчитать" onclick="updatePlot()">
+	</br>
+	<div id="graph"/>
+</body>
+</html>

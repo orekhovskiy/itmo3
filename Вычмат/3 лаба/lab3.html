@@ -1,0 +1,123 @@
+<html>
+<head>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="NewtonMethod.js"></script>
+    <script type="text/javascript">
+    function f (x) {
+      switch(document.getElementById('func').value) {
+        case "first":
+        	return Math.sin(x);
+        	break;
+        case "second":
+        	return Math.exp(x);
+    		break;
+        case "third":
+        	return Math.pow(x, 3);
+          	break;
+        default:
+          	return 100;
+          	break; 
+      }
+    }
+
+    function parseNumber(id){
+    	var number = parseFloat(document.getElementById(id).value);
+        if (isNaN(number))
+          document.getElementById(id).value = '';
+    	return number;
+    }
+
+	function valueAt(x, polynomial, firstNode, step) {
+			var sum = 0;
+			var product = 1;
+			for (var i = 0; i < polynomial.length; i++)
+			{
+				sum += polynomial[i] * product;
+				var xn = firstNode + i * step;
+				product *= (x - xn);
+			}
+			return sum;
+		}
+    function draw(fxArr, pxArr, xArr, scattersX, scattersY){
+	  var fTrace = {
+      	x: xArr,
+      	y: fxArr,
+      	type: 'lines',
+      	name: 'f(x)'
+      };
+      var pTrace = {
+      	x: xArr,
+      	y: pxArr,
+      	type: 'lines',
+      	name: 'p(x)'
+      };
+      var scatterTrace = {
+      	x: scattersX,
+      	y: scattersY,
+      	mode: 'markers',
+      	name: 'Узлы'
+      };
+
+      var data = [fTrace, pTrace, scatterTrace];
+      Plotly.newPlot('graph', data);
+    }
+    
+    function Main() {
+      x0 = parseNumber("left");
+      h = parseNumber("step");
+      nodesAmount = parseNumber("nodesAmount");
+      var polynomial = NewtonMethod.interpolate(x0, h, nodesAmount);
+
+      var offsetNodes = nodesAmount * 0.125;
+	  var left = x0 - offsetNodes * h;
+	  var right = x0 + (offsetNodes + nodesAmount - 1) * h;
+	  if (left > right)
+	  {
+		var temp = left;
+		left = right;
+		right = temp;
+	  }
+	  var fxArr = [];
+	  var pxArr = [];
+      var xArr = [];
+      var count = 0;
+      var i = left;
+      while (i <= right) {
+      	fxArr[count] = f(i);
+      	pxArr[count] = valueAt(i, polynomial, x0, h);
+      	xArr[count] = i;
+      	count++;
+      	i += 0.1;
+      }
+      var scattersX = new Array();
+      var scattersY = new Array();
+      var xn = x0      
+      for (var i = 0; i < nodesAmount; i++){
+      	scattersX[i] = xn;
+      	scattersY[i] = f(xn);
+      	xn += h;
+      }
+      draw(fxArr, pxArr, xArr, scattersX, scattersY);
+  }
+  </script>
+</head>
+<body>
+  <br>
+    <span> Выберете функцию</span>
+    <select name="func[]" id = "func">
+	    <option value = "first">sin(x)</option>
+	    <option value = "second">exp(x)</option>
+	    <option value = "third">x^3</option>
+    </select>
+    <span> Первый узел</span>
+    <input required type="number" id="left" step="0.1">
+    <span>Шаг</span>
+    <input required type="number" id="step" min ="0.1" step="0.1">
+    <span>Количество узлов</span>
+    <input required type="number" id="nodesAmount" min ="2" step="1">
+    <input type="submit" name ="submit" value ="Подсчитать" onclick="Main()">
+  </br>
+  <br/>
+  <div id="graph"/>
+</body>
+</html>

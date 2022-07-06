@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <style type="text/css">
+        body{
+            background: aqua;
+        }
+        #head{
+            height: 50%;
+            width: 100%;
+            border: 5px solid orange;
+        }
+        #maintext{
+            font-size: xx-large;
+            font-style: italic;
+            text-align: center;
+            font-weight: 900;
+            color: blueviolet;
+        }
+        #time,#date,#datetime{
+            font-size: x-large;
+            text-align: center;
+            font-weight: 700;
+            color: crimson;
+        }
+        #date{
+            font-size: x-large;
+            text-align: center;
+            font-weight: 700;
+            color: blue;
+        }
+        #datetime{
+            font-size: x-large;
+            text-align: center;
+            font-weight: 700;
+            color: green;
+        }
+        #link{
+            margin: auto;
+            font-size: x-large;
+            text-align: center;
+            font-weight: 700;
+        }
+        #timediv{
+            width: 20%;
+            border: 5px dashed orange;
+            margin: auto;
+        }
+    </style>
+    <title>Welcome!</title>
+</h:head>
+<h:body>
+    <div id="head">
+        <p id="maintext">Baev D.V.<br/>P3217, Var.786</p>
+    </div>
+    <br></br>
+    <div id="timediv">
+        <p id="datetime">Date and Time:</p>
+        <p id="date"></p>
+        <p id="time"></p>
+    </div>
+    <br></br>
+    <p id="link"><h:link value="Main page" outcome="first" /></p>
+    <script type="text/javascript">
+        function getyear(){
+            d = new Date();
+            var a = d.getFullYear();
+            if(1000 > a)
+                return "0"+a;
+            return a;
+        }
+        function getmonth(){
+            d = new Date();
+            var a = d.getMonth();
+            a=a+1;
+            if(10 > a)
+                return "0"+a;
+            return a;
+        }
+        function getday(){
+            d = new Date();
+            var a = d.getDate();
+            if(10 > a)
+                return "0"+a;
+            return a;
+        }
+        function gethours(){
+            d = new Date();
+            var a = d.getHours();
+            if(10 > a)
+                return "0"+a;
+            return a;
+        }
+        function getminutes(){
+            d = new Date();
+            var a = d.getMinutes();
+            if(10 > a)
+                return "0"+a;
+            return a;
+        }
+        function getseconds(){
+            d = new Date();
+            var a = d.getSeconds();
+            if(10 > a)
+                return "0"+a;
+            return a;
+        }
+        function gettime() {
+            document.getElementById("time").innerHTML = gethours()+":"+getminutes()+":"+getseconds();
+        }
+        function getdate() {
+            document.getElementById("date").innerHTML = getyear()+"."+getmonth()+"."+getday();
+        }
+        getdate();
+        gettime();
+        setInterval(gettime,6000);
+        setInterval(getdate,6000);
+    </script>
+</h:body>
+</html>

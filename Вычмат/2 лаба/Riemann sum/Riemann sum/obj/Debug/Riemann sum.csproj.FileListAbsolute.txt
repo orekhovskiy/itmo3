@@ -1,0 +1,29 @@
+D:\Учебка\3 сем\Вычмат\2 лаба\Riemann sum\Riemann sum\bin\Debug\Riemann sum.exe.config
+D:\Учебка\3 сем\Вычмат\2 лаба\Riemann sum\Riemann sum\bin\Debug\Riemann sum.exe
+D:\Учебка\3 сем\Вычмат\2 лаба\Riemann sum\Riemann sum\bin\Debug\Riemann sum.pdb
+D:\Учебка\3 сем\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\Riemann sum.csprojResolveAssemblyReference.cache
+D:\Учебка\3 сем\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\MainWindow.g.cs
+D:\Учебка\3 сем\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\App.g.cs
+D:\Учебка\3 сем\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\Riemann sum_MarkupCompile.cache
+D:\Учебка\3 сем\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\Riemann sum_MarkupCompile.lref
+D:\Учебка\3 сем\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\MainWindow.baml
+D:\Учебка\3 сем\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\Riemann sum.g.resources
+D:\Учебка\3 сем\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\Riemann_sum.Properties.Resources.resources
+D:\Учебка\3 сем\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\Riemann sum.csproj.GenerateResource.Cache
+D:\Учебка\3 сем\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\Riemann sum.exe
+D:\Учебка\3 сем\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\Riemann sum.pdb
+D:\Учебка\2 курс\3sem\Вычмат\2 лаба\Riemann sum\Riemann sum\bin\Debug\Riemann sum.exe.config
+D:\Учебка\2 курс\3sem\Вычмат\2 лаба\Riemann sum\Riemann sum\bin\Debug\Riemann sum.exe
+D:\Учебка\2 курс\3sem\Вычмат\2 лаба\Riemann sum\Riemann sum\bin\Debug\Riemann sum.pdb
+D:\Учебка\2 курс\3sem\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\Riemann sum.csprojResolveAssemblyReference.cache
+D:\Учебка\2 курс\3sem\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\MainWindow.g.cs
+D:\Учебка\2 курс\3sem\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\App.g.cs
+D:\Учебка\2 курс\3sem\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\Riemann sum_MarkupCompile.cache
+D:\Учебка\2 курс\3sem\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\Riemann sum_MarkupCompile.lref
+D:\Учебка\2 курс\3sem\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\MainWindow.baml
+D:\Учебка\2 курс\3sem\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\Riemann sum.g.resources
+D:\Учебка\2 курс\3sem\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\Riemann_sum.Properties.Resources.resources
+D:\Учебка\2 курс\3sem\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\Riemann sum.csproj.GenerateResource.Cache
+D:\Учебка\2 курс\3sem\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\Riemann sum.csproj.CoreCompileInputs.cache
+D:\Учебка\2 курс\3sem\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\Riemann sum.exe
+D:\Учебка\2 курс\3sem\Вычмат\2 лаба\Riemann sum\Riemann sum\obj\Debug\Riemann sum.pdb

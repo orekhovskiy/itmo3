@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Лаб 3. ПИП</title>
+    <style type="text/css">
+        #divcanvas{
+            width:50%;
+            margin:auto;
+            text-align: center;
+        }
+        #divdatatable{
+            text-align: center;
+        }
+        #inputs{
+            table-layout: fixed;
+            height: 30%;
+            border: 2px solid black;
+            width:50%;
+            margin:auto;
+            text-align: center;
+        }
+        #outputs{
+            table-layout: fixed;
+            border: 2px dashed black;
+            width:50%;
+            margin:auto;
+            text-align: center;
+        }
+        .names{
+            text-align: center;
+            font-size: x-large;
+            font-weight: 700;
+        }
+        .tdnames{
+            text-align: center;
+            overflow: auto;
+        }
+        #inputsname{
+            position: relative;
+            border: 5px double black;
+            text-align: center;
+            font-size: x-large;
+            font-weight: 700;
+            width: 20%;
+            margin: auto;
+        }
+    </style>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+</h:head>
+<h:body onload="draw();">
+    <script type="text/javascript">
+        function Point(x,y){
+            this.X = x;
+            this.Y = y;
+        }
+        var points=[];
+        function addPoint(x,y){
+            p = new Point(x,y);
+            points.push(p);
+        }
+    </script>
+    <div id="divcanvas">
+        <canvas onclick="makeForm();" id="canvas" onmousemove="mouseCoords(event)" style="border:1px solid black;" height="500" width="500">
+            <p>Ваш браузер не поддерживает рисование.</p>
+        </canvas>
+        <h2 id="coords"></h2>
+    </div>
+    <br/>
+    <div id="inputsname">
+        Input
+    </div>
+    <br/>
+    <h:form id="form">
+        <table id="inputs">
+            <tr>
+                <td class="tdnames">
+                    <p class="names">X</p>
+                    <p>
+                        <h:inputText id="x" onchange="resetMesX();" onsubmit="resetMesX();" value="#{checkArea.x}" required="true">
+                            <f:validateDoubleRange minimum="-3.0" maximum="5.0"/>
+                        </h:inputText>
+                    </p>
+                </td>
+                <td class="tdnames">
+                    <p class="names">Y</p>
+                    <p>
+                        <h:inputText id="y" onchange="resetMesY();" onsubmit="resetMesY();" value="#{checkArea.y}" required="true">
+                            <f:validateDoubleRange minimum="-5.0" maximum="5.0"/>
+                        </h:inputText>
+                    </p>
+                </td>
+                <td class="tdnames">
+                    <p class="names">R</p>
+                    <p>
+                        <h:inputText id="r" value="#{checkArea.r}" required="true" onclick="draw();" onsubmit="resetMesR();" onchange="draw();resetMesR();">
+                            <f:validateDoubleRange minimum="2.0" maximum="5.0"/>
+                            <f:ajax event="valueChange" render="dt"/>
+                        </h:inputText>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdnames"><p><h:message class="messageX" for="x" style="color:red"/></p></td>
+                <td class="tdnames"><p><h:message class="messageY" for="y" style="color:red"/></p></td>
+                <td class="tdnames"><p><h:message class="messageR" for="r" style="color:red"/></p></td>
+            </tr>
+            <tr>
+                <td/>
+                <td class="tdnames">
+                    <br/>
+                    <h:commandButton id="cb" action="#{checkArea.addToDb}" value="Submit"/>
+                </td>
+                <td/>
+            </tr>
+        </table>
+    </h:form>
+    <div id="divdatatable">
+    <p:dataTable id="dt" value="#{checkArea.response}" var="item" rowIndexVar="i">
+        <p:column headerText="№">
+            <script type="text/javascript">
+                var x="#{item.x}"*50+250;
+                var y="#{item.y}"*(-50)+250;
+                addPoint(x,y);
+            </script>
+            <h:outputText value="#{i+1}"/>
+        </p:column>
+        <p:column headerText="X">
+            <h:outputText value="#{item.x}"/>
+        </p:column>
+        <p:column headerText="Y">
+            <h:outputText value="#{item.y}"/>
+        </p:column>
+        <p:column headerText="R">
+            <h:outputText value="#{item.r}"/>
+        </p:column>
+        <p:column headerText="Result">
+            <h:outputText value="#{item.result}"/>
+        </p:column>
+    </p:dataTable>
+        <br/>
+    <h:form>
+        <h:commandButton action="#{checkArea.clear}" value="Clear"/>
+    </h:form>
+        <br/>
+        <h:link value="Start page" outcome="welcome"/>
+    </div>
+    <script type="text/javascript">
+        /*function setDefault() {
+            $("#form\\:x").val(-3);
+            $("#form\\:y").val(-5);
+            $("#form\\:r").val(2);
+        }
+        setDefault();*/
+        function resetMesX() {
+            $(".messageX").empty();
+        }
+        function resetMesY() {
+            $(".messageY").empty();
+        }
+        function resetMesR() {
+            $(".messageR").empty();
+        }
+        var canvas = document.getElementById("canvas");
+        context = canvas.getContext("2d");
+        var img = new Image();
+        img.onload = function(){
+            drawAxis();
+        }
+        img.src = "axis.png";
+        function drawAxis() {
+            context.clearRect(0,0,600,600);
+            context.drawImage(img,0,0,500,500);
+        }
+        function draw(){
+            context.clearRect(0,0,600,600);
+            var r = $("#form\\:r").val()*50;
+            context.drawImage(img,0,0,500,500);
+            if(checkInput()) {
+                context.fillStyle = "rgb(0, 0, 255)";
+                context.fillRect(250, 250, r / 2, r);//rectangle
+                context.beginPath();
+                context.arc(250, 250, r / 2, Math.PI, Math.PI / 2, true);//round
+                context.lineTo(250,250);
+                context.fill();
+                context.closePath();
+                context.beginPath();
+                context.moveTo(250, 250-r);//triangle
+                context.lineTo(250+r,250);
+                context.lineTo(250,250);
+                context.fill();
+                context.closePath();
+                drawPoints();
+            }
+        }
+        function drawPoints() {
+            var r =  $("#form\\:r").val();
+                for(i=0; points.length > i; i++){
+                    var x = (points[i].X-250)/50;
+                    var y = (points[i].Y-250)/-50;
+                    if((y&lt;=0&amp;y&gt;=-r&amp;x&gt;=0&amp;x&lt;=r/2)||
+                        (parseFloat(-x)+parseFloat(r)&gt;=parseFloat(y)&amp;parseFloat(y)&gt;=0&amp;parseFloat(x)&gt;=0)||
+                        (x*x+y*y&lt;=(r/2)*(r/2)&amp;x&lt;=0&amp;y&lt;=0)){
+                        context.fillStyle = "rgb(0, 255, 0)";
+                    }
+                    else{
+                        context.fillStyle = "rgb(255, 0, 0)";
+                    }
+                    context.beginPath();
+                    context.arc(points[i].X,points[i].Y,2,0,2*Math.PI,false);
+                    context.fill();
+                    context.closePath();
+                }
+        }
+        var xCoord;
+        var yCoord;
+        function makeForm(){
+            $("#form\\:x").val(window.xCoord);
+            $("#form\\:y").val(window.yCoord);
+            $("#form\\:cb").click();
+        }
+        function mouseCoords(e) {
+            window.xCoord = e.offsetX==undefined?e.layerX:e.offsetX;
+            window.yCoord = e.offsetY==undefined?e.layerY:e.offsetY;
+            window.xCoord = (window.xCoord-250)/50;
+            window.yCoord = -(window.yCoord-250)/50;
+            document.getElementById('coords').innerHTML = "X:"+window.xCoord+";Y:"+window.yCoord;
+        }
+        function checkInput()
+        {
+            var r = $("#form\\:r").val();
+            if (!isFinite(r) || r > 5 || r &lt; 2)
+            {
+                //alert("'r' must be from 2 to 5!");
+               // $("#form\\:r").val(2);
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+    </script>
+</h:body>
+</html>

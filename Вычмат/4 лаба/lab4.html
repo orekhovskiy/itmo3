@@ -1,0 +1,110 @@
+<html>
+<head>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="NewtonMethod.js"></script>
+    <script src="RungeKuttMethod.js"></script>
+    <script type="text/javascript">
+    function func() {
+    	var func;
+		switch(document.getElementById('func').value) {
+		case "first":
+			func = function(x, y){
+				return Math.sin(x);
+			}
+			break;
+		case "second":
+			func = function(x, y){
+				return Math.exp(x);
+			}
+			break;
+		case "third":
+			func = function(x, y){
+				return Math.pow(x,3);
+			}
+		  	break;
+		default:
+		  	func = function(x, y){
+				return 0;
+			}
+		  	break; 
+		}
+		return func;
+    }
+
+    function parseNumber(id){
+    	var number = parseFloat(document.getElementById(id).value);
+        if (isNaN(number))
+          document.getElementById(id).value = '';
+    	return number;
+    }
+
+	function valueAt(x, polynomial, firstNode, step) {
+		var sum = 0;
+		var product = 1;
+		for (var i = 0; i < polynomial.length; i++)
+		{
+			sum += polynomial[i] * product;
+			var xn = firstNode + i * step;
+			product *= (x - xn);
+		}
+		return sum;
+	}
+
+    function draw(scattersX, scattersY) {
+		var scatterTrace = {
+			x: scattersX,
+			y: scattersY,
+			mode: 'lines',
+			name: 'y = f(x,y)'
+		};
+		data = [scatterTrace]
+		Plotly.newPlot('graph', data);
+    }
+    
+	function Main() {
+		x0 = parseNumber("x0");
+		y0 = parseNumber("y0");
+		xEnd = parseNumber("xEnd");
+		accur = parseNumber("accur");
+		var arr = [[], []];
+		arr = RungeKuttMethod.runge(x0, y0, xEnd, accur, func());
+		var x = [], y = [];
+		for (var i = 0; i < arr[0].length; i++) {
+			x.push(arr[0][i]);
+			y.push(arr[1][i]);
+		}
+		var polynomial = [];
+		polynomial = NewtonMethod.interpolate(x, y);
+		var scattersX = [], scattersY = [];
+		var count = 0;
+		for (var i = x0; i <= xEnd; i+= accur) {
+			scattersX[count] = i;
+			scattersY[count] = valueAt(i, polynomial, x[0], x[1] - x[0]);
+			count++;
+		}
+		draw(scattersX, scattersY);
+	}
+  </script>
+</head>
+<body>
+  <br>
+    <span> Выберете функцию</span>
+    <select name="func[]" id = "func">
+	    <option value = "first">sin(x)</option>
+	    <option value = "second">exp(x)</option>
+	    <option value = "third">x^3</option>
+    </select>
+    <span> X0 </span>
+    <input required type="number" id="x0" step="0.1">
+    <span> Y0 </span>
+    <input required type="number" id="y0" step="0.1">
+    <span>X_End</span>
+    <input required type="number" id="xEnd" step="0.1">
+    <span>Точность</span>
+    <input required type="number" id="accur" step="0.1">
+    <input type="submit" name ="submit" value ="Подсчитать" onclick="Main()">
+  </br>
+  <br/>
+  <div id="graph"/>
+</body>
+</html>

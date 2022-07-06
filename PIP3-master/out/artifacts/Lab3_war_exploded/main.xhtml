@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Lab3</title>
+    <script type="text/javascript" src="drawing.js" charset="utf-8"></script>
+</h:head>
+<h:body onload="drawDefault();">
+    <canvas id="canv" width="300" height="300"></canvas>
+    <h:form id="form">
+        <h:inputHidden id="numberOfPoints" value="#{pointsOnView.numberOfPoints}">
+            <f:converter converterId="converters.DoubleConverter"/>
+        </h:inputHidden>
+        Введите X:
+        <ace:sliderEntry id="xSlider" min="-400" max="400" stepPercent="2.5" value="#{checkAreaBean.x}">
+            <ace:ajax event="slide" execute="@this" render="sliderValue"/>
+        </ace:sliderEntry>
+        <h:outputText id="sliderValue" value="#{checkAreaBean.x}"/>
+        <br/>
+        Введите Y:
+        <h:inputText id="yInput" value="#{checkAreaBean.y}">
+            <f:converter converterId="converters.DoubleConverter"/>
+            <f:validator validatorId="validators.YValidator"/>
+        </h:inputText>
+        <h:message  for="yInput" style="color:red"/><br/>
+        Введите R:
+        <h:inputText id="rInput"  value="#{checkAreaBean.r}"
+                     onchange="getPoints(#{pointsOnView.getLastNPoints()})"
+                     valueChangeListener="#{pointsOnView.updateRadiusInDB}">
+            <f:converter converterId="converters.DoubleConverter"/>
+            <f:validator validatorId="validators.RValidator"/>
+            <f:ajax event="change" execute="@this"/>
+        </h:inputText>
+        <h:message for="rInput" style="color:red"/><br/>
+        <h:commandButton id="submitBtn" value="Отправить"/><br/>
+        <h:outputText value="#{checkAreaBean.output}" id="result"/>
+    </h:form><br/>
+    <h:dataTable value="#{resultsBean.resultList}" var="p">
+        <h:column>
+            <f:facet name="header">X</f:facet>
+            #{p.x}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Y</f:facet>
+            #{p.y}
+        </h:column>
+        <h:column>
+            <f:facet name="header">R</f:facet>
+            #{p.r}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Попадает?</f:facet>
+            #{p.strike}
+        </h:column>
+    </h:dataTable>
+    <h:link outcome="index">На стартовую страницу</h:link>
+</h:body>
+</html>

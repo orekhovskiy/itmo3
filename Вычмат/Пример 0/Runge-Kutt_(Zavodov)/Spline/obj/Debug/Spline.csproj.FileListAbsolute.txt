@@ -1,0 +1,3 @@
+D:\Учебка\2 курс\3sem\Вычмат\Пример 0\Runge-Kutt_(Zavodov)\Spline\obj\Debug\Spline.csprojResolveAssemblyReference.cache
+D:\Учебка\2 курс\3sem\Вычмат\Пример 0\Runge-Kutt_(Zavodov)\Spline\obj\Debug\Spline.Form1.resources
+D:\Учебка\2 курс\3sem\Вычмат\Пример 0\Runge-Kutt_(Zavodov)\Spline\obj\Debug\Spline.csproj.GenerateResource.Cache
